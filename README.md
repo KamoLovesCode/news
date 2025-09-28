@@ -4,6 +4,8 @@
 
 # Run and deploy your AI Studio app
 
+[![Deploy to GitHub Pages](https://github.com/KamoLovesCode/news/actions/workflows/deploy.yml/badge.svg)](https://github.com/KamoLovesCode/news/actions/workflows/deploy.yml)
+
 This contains everything you need to run your app locally.
 
 View your app in AI Studio: https://ai.studio/apps/drive/1iQKAYuin2elQQfeoRRfEq1u5fcLgqZyk
@@ -48,17 +50,6 @@ The workflow at `.github/workflows/deploy.yml`:
 ### Development vs Production base path
 
 The Vite config sets `base: '/news/'` in `vite.config.ts` so assets resolve correctly on Pages. When running locally (`npm run dev`) this still works transparently.
-
-### Manual deployment (optional)
-
-Although automated deployment is preferred, you can still publish manually (not required):
-
-```
-npm run build
-npm run deploy
-```
-
-That uses the `gh-pages` package to push the `dist` folder to a `gh-pages` branch. This is separate from the Actions-based Pages flow—use one approach consistently to avoid confusion. Recommended: keep using the GitHub Actions workflow.
 
 ### Troubleshooting
 

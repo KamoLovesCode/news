@@ -38,24 +38,24 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (!selectedArticle && !showLanding) {
-        loadNews(activeCategory);
+      loadNews(activeCategory);
     }
   }, [activeCategory, selectedArticle, showLanding, loadNews]);
 
   const handleSearch = (searchTerm: string) => {
     setActiveCategory(searchTerm);
   }
-  
+
   const handleCategoryChange = (category: string) => {
-      setActiveCategory(category);
+    setActiveCategory(category);
   }
 
   const handleArticleSelect = (article: Article) => {
-      setSelectedArticle(article);
+    setSelectedArticle(article);
   }
 
   const handleBack = () => {
-      setSelectedArticle(null);
+    setSelectedArticle(null);
   }
 
   if (showLanding) {
@@ -81,32 +81,32 @@ const App: React.FC = () => {
                 <>
                   {/* Breaking News Section */}
                   <div className="mb-12">
-                    <div className="flex justify-between items-center mb-4">
-                      <h2 className="text-2xl font-bold">Breaking News</h2>
+                    <div className="flex justify-between items-center mb-6">
+                      <h2 className="text-2xl font-bold text-left">Breaking News</h2>
                       <a href="#" className="text-sm font-medium text-blue-500 dark:text-blue-400 hover:underline">View all</a>
                     </div>
                     <div className="flex overflow-x-auto space-x-6 scrollbar-hide -mx-4 px-4 pb-4">
                       {featuredArticles.map((article) => (
-                          <FeaturedArticleCard key={article.title} article={article} onSelect={handleArticleSelect} />
+                        <FeaturedArticleCard key={article.title} article={article} onSelect={handleArticleSelect} />
                       ))}
                     </div>
                   </div>
-                  
+
                   {/* Recommendation Section */}
-                   <div>
-                    <div className="flex justify-between items-center mb-4">
-                      <h2 className="text-2xl font-bold">Recommendation</h2>
+                  <div>
+                    <div className="flex justify-between items-center mb-6">
+                      <h2 className="text-2xl font-bold text-left">Recommendation</h2>
                       <a href="#" className="text-sm font-medium text-blue-500 dark:text-blue-400 hover:underline">View all</a>
                     </div>
-                    <div className="space-y-6">
-                       {recommendedArticles.map((article) => (
-                          <ArticleListItem key={article.title} article={article} onSelect={handleArticleSelect} />
-                       ))}
+                    <div className="space-y-4">
+                      {recommendedArticles.map((article) => (
+                        <ArticleListItem key={article.title} article={article} onSelect={handleArticleSelect} />
+                      ))}
                     </div>
                   </div>
                 </>
               ) : (
-                <div className="text-center py-16">
+                <div className="text-left py-16">
                   <h2 className="text-2xl font-semibold text-gray-500 dark:text-gray-400">No articles found.</h2>
                   <p className="text-gray-600 dark:text-gray-500 mt-2">Try a different category or search term.</p>
                 </div>

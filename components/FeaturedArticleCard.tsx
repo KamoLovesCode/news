@@ -19,14 +19,14 @@ const FeaturedArticleCard: React.FC<FeaturedArticleCardProps> = ({ article, onSe
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
       <div className="absolute bottom-0 left-0 right-0 p-5 text-white">
-        <span className="inline-block bg-blue-500 dark:bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full mb-2">
+        <span className="inline-block bg-blue-500 dark:bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full mb-3">
           {article.category}
         </span>
-        <h3 className="font-bold text-lg leading-tight group-hover:underline">
+        <h3 className="font-bold text-lg leading-tight group-hover:underline text-left">
           {article.title}
         </h3>
         {article.sources && article.sources.length > 0 && (
-            <p className="text-xs text-gray-300 mt-2">{article.sources[0].web.title}</p>
+          <p className="text-xs text-gray-300 mt-2 text-left truncate">{article.sources[0].web.title}</p>
         )}
       </div>
     </div>

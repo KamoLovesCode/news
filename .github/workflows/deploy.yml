@@ -6,20 +6,21 @@ on:
   pull_request:
     branches: [ main ]
 
-# Minimum permissions for GitHub Pages deployment
 permissions:
   contents: read
   pages: write
   id-token: write
 
 concurrency:
-  group: pages
+  group: github-pages
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
+    name: Build & Test
     runs-on: ubuntu-latest
-
+    outputs:
+      artifact-name: ${{ steps.upload_dist.outputs.artifact-id }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,33 +28,52 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
           cache: 'npm'
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
 
       - name: Build
         run: npm run build
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
 
-      - name: Setup Pages
+      - name: Upload dist artifact
+        id: upload_dist
         if: github.event_name == 'push'
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        if: github.event_name == 'push'
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          path: ./dist
+          name: dist
+          path: dist
+          if-no-files-found: error
 
-      - name: Deploy to GitHub Pages
-        if: github.event_name == 'push'
-        id: deployment
-        uses: actions/deploy-pages@v4
-
+  deploy:
+    name: Deploy
+    needs: build
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
     environment:
-      if: github.event_name == 'push'
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download dist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

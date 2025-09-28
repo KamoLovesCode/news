@@ -1,0 +1,5 @@
+{
+  "name": "kamoc des news",
+  "description": "A modern news website powered by the NewsData.io API to deliver up-to-date local news from South Africa.",
+  "requestFramePermissions": []
+}
